@@ -43,8 +43,9 @@
             flex-wrap: wrap;
         }
         .preview-box {
-            flex: 0 0 48%;
+            flex: 0 0 31%;
             margin-bottom: 20px;
+            text-align: center;
         }
         .preview-box h3 {
             margin-bottom: 10px;
@@ -86,6 +87,12 @@
             border: 1px solid #ccffcc;
             display: none;
         }
+        .help-text {
+            text-align: center;
+            color: #666;
+            margin: 10px 0;
+            font-size: 0.9em;
+        }
     </style>
 </head>
 <body>
@@ -108,6 +115,11 @@
                 <img id="original-preview">
             </div>
             <div class="preview-box">
+                <h3>检测到的光源</h3>
+                <img id="light-source-preview">
+                <div class="help-text">红色十字和黄色圆圈标记了检测到的光源位置</div>
+            </div>
+            <div class="preview-box">
                 <h3>处理后图片</h3>
                 <img id="processed-preview">
             </div>
@@ -121,6 +133,7 @@
         const success = document.querySelector('.success');
         const originalPreview = document.getElementById('original-preview');
         const processedPreview = document.getElementById('processed-preview');
+        const lightSourcePreview = document.getElementById('light-source-preview');
 
         function showError(message) {
             error.textContent = message;
@@ -162,6 +175,7 @@
             success.style.display = 'none';
             originalPreview.src = '';
             processedPreview.src = '';
+            lightSourcePreview.src = '';
 
             const formData = new FormData();
             formData.append('file', file);
@@ -180,6 +194,7 @@
 
                 originalPreview.src = `/static/uploads/${data.original}`;
                 processedPreview.src = `/static/uploads/${data.processed}`;
+                lightSourcePreview.src = `/static/uploads/${data.preview}`;
                 showSuccess();
             } catch (err) {
                 showError(err.message || '处理图片时出错，请重试');
